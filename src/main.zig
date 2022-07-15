@@ -1,3 +1,4 @@
+const ziglyph = @import("ziglyph");
 const std = @import("std");
 
 pub fn main() anyerror!void {

@@ -1,9 +1,9 @@
 #!/usr/bin/env xonsh
 
-from fire import Fire
+#from fire import Fire
 from os.path import dirname,abspath,exists
 import platform
-from humanize import naturalsize
+#from humanize import naturalsize
 import os
 
 PWD = dirname(abspath(__file__))
@@ -12,7 +12,9 @@ cd @(PWD)
 
 p".xonshrc".exists() && source .xonshrc
 
-zigmod fetch
+if not exists(".zigmod"):
+  zigmod fetch
+
 zig build -Drelease-fast=true
 
 bin = "./zig-out/bin/rmw"
