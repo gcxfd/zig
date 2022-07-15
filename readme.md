@@ -1,5 +1,7 @@
 ## 学习笔记
 
+安装最新版 `brew install zig --HEAD`
+
 `zig init-exe` : Initialize a `zig build` application in the cwd
 `zig init-lib` : Initialize a `zig build` library in the cwd
 
