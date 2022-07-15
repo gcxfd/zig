@@ -12,6 +12,7 @@ cd @(PWD)
 
 p".xonshrc".exists() && source .xonshrc
 
+zigmod fetch
 zig build -Drelease-fast=true
 
 bin = "./zig-out/bin/rmw"
