@@ -14,9 +14,9 @@ pub fn build(b: *std.build.Builder) void {
     const mode = b.standardReleaseOptions();
 
     const exe = b.addExecutable(name, "src/main.zig");
+    deps.addAllTo(exe);
     exe.setTarget(target);
     exe.setBuildMode(mode);
-    deps.addAllTo(exe);
     exe.install();
 
     //std.log.info("release mode {s}", .{mode});
