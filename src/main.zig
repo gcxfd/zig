@@ -1,20 +1,26 @@
 const ziglyph = @import("ziglyph");
 const std = @import("std");
 
+const info = std.log.info;
 const fixedBufferStream = std.io.fixedBufferStream;
 const AllKeysFile = ziglyph.collator.AllKeysFile;
 
 pub fn main() anyerror!void {
-    var allocator = std.heap.GeneralPurposeAllocator(.{}){};
-    defer std.debug.assert(!allocator.deinit());
-    const arena = allocator.allocator();
+    // var allocator = std.heap.GeneralPurposeAllocator(.{}){};
+    // defer std.debug.assert(!allocator.deinit());
+    // const arena = allocator.allocator();
 
-    const txt = "The most common newbie mistake: \nSo while you're learning Zig you come up with the following program:";
-    std.log.info("> {s}", .{txt});
+    const txt = [_]u8{ 1, 2, 3, 4, 5, 6, 7 };
 
     var fbs = fixedBufferStream(&txt);
 
-    AllKeysFile.parse(arena, fbs.reader());
+    var dest: [4]u8 = undefined;
+
+    var read = try fbs.reader().read(&dest);
+
+    //AllKeysFile.parse(arena, fbs.reader());
+
+    info("read {d}", .{read});
 
     std.log.info("All your codebase are belong to us.", .{});
 }
