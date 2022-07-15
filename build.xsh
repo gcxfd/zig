@@ -21,4 +21,5 @@ bin = "./zig-out/bin/rmw"
 stat = os.stat(bin)
 
 if stat.st_size > 50000:
+  ./sh/upx.sh
   upx --best --lzma @(bin)

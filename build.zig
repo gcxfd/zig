@@ -19,7 +19,7 @@ pub fn build(b: *std.build.Builder) void {
     deps.addAllTo(exe);
     exe.install();
 
-    std.log.info("release mode {s}", .{mode});
+    //std.log.info("release mode {s}", .{mode});
 
     const run_cmd = exe.run();
     run_cmd.step.dependOn(b.getInstallStep());
