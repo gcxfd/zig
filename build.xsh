@@ -12,4 +12,4 @@ cd @(PWD)
 
 p".xonshrc".exists() && source .xonshrc
 
-zig build-exe -O ReleaseFast main.zig
+zig build -Drelease-fast=true

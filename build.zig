@@ -1,29 +1,37 @@
 const std = @import("std");
+const name = "rmw";
 
 pub fn build(b: *std.build.Builder) void {
-    //const lib = b.addStaticLibrary("napi.zig", "src/main.zig");
-    //lib.setBuildMode(std.builtin.Mode.ReleaseFast);
-    //lib.strip = true;
-    //lib.linker_allow_shlib_undefined = true;
-    //lib.emit_bin = .{ .emit_to = "lib.node" };
-    //lib.linkLibC();
-    //lib.addIncludeDir("deps/node-v18.0.0/include/node");
-    //lib.install();
-    //const main_tests = b.addTest("src/main.zig");
-    //main_tests.setBuildMode(mode);
+    // Standard target options allows the person running `zig build` to choose
+    // what target to build for. Here we do not override the defaults, which
+    // means any target is allowed, and the default is native. Other options
+    // for restricting supported target set are available.
+    const target = b.standardTargetOptions(.{});
 
-    const mode = std.builtin.Mode.ReleaseFast;
-    const exe = b.addExecutable("main", "src/main.zig");
-    //exe.setTarget(target);
+    // Standard release options allow the person running `zig build` to select
+    // between Debug, ReleaseSafe, ReleaseFast, and ReleaseSmall.
+    const mode = b.standardReleaseOptions();
+
+    const exe = b.addExecutable(name, "src/main.zig");
+    exe.setTarget(target);
     exe.setBuildMode(mode);
     exe.install();
 
+    std.log.info("release mode {s}", .{mode});
+
     const run_cmd = exe.run();
     run_cmd.step.dependOn(b.getInstallStep());
+    if (b.args) |args| {
+        run_cmd.addArgs(args);
+    }
 
-    const run_step = b.step("run", "");
+    const run_step = b.step("run", "Run the app");
     run_step.dependOn(&run_cmd.step);
 
-    //const test_step = b.step("test", "Run library tests");
-    //test_step.dependOn(&main_tests.step);
+    const exe_tests = b.addTest("src/main.zig");
+    exe_tests.setTarget(target);
+    exe_tests.setBuildMode(mode);
+
+    const test_step = b.step("test", "Run unit tests");
+    test_step.dependOn(&exe_tests.step);
 }
