@@ -4,3 +4,4 @@ license: MulanPubL-2.0
 description: rmw
 root_dependencies:
   - src: git https://github.com/LewisGaul/zig-nestedtext.git
+  - src: git https://github.com/jecolon/zigstr
